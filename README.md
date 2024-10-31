@@ -27,9 +27,39 @@ Below is short explanation of remaining files in the project folder.
 ```
 ├── CMakeLists.txt
 ├── main
-│   ├── CMakeLists.txt
-│   └── main.c
+│   ├── CMakeLists.txt
+│   ├── idf_component.yml
+│   ├── main.cpp
+│   │
+│   ├── lib
+│   │   ├── gpio_handler.h
+│   │   ├── http_server.h
+│   │   ├── nvs_handle.h
+│   │   ├── vl53l0x_handler.h
+│   │   ├── WebSocket.h
+│   │   └── wifi_handler.h
+│   │
+│   ├── pololu_vl53l0x
+│   │   ├── i2c.cpp
+│   │   ├── i2c.h
+│   │   ├── vl53l0x.cpp
+│   │   └── vl53l0x.h
+│   │
+│   ├── src
+│   │   ├── gpio_handler.c
+│   │   ├── http_server.cpp
+│   │   ├── nvs_handle.c
+│   │   ├── vl53l0x_handler.cpp
+│   │   ├── WebSocket.c
+│   │   └── wifi_handler.c
+│   │
+│   └── webserver
+│       ├── index.html
+│       ├── script.js
+│       └── style.css
+│
 └── README.md                  This is the file you are currently reading
+
 ```
 Additionally, the sample project contains Makefile and component.mk files, used for the legacy Make based build system. 
 They are not used or needed when building with CMake and idf.py.
