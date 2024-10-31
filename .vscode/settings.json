@@ -16,9 +16,15 @@
     "files.associations": {
         "nvs_handle.h": "c",
         "chrono": "c",
-        "functional": "c"
+        "functional": "c",
+        "*.tcc": "c",
+        "freertos.h": "c",
+        "esp_websocket_client.h": "c",
+        "vl53l0x_handler.h": "c",
+        "vl53l0x.h": "c",
+        "cjson.h": "c"
     },
     "idf.flashType": "UART",
-    "idf.portWin": "COM10",
+    "idf.portWin": "COM4",
     "liveServer.settings.port": 5501
 }

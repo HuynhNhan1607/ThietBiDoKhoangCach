@@ -17,7 +17,7 @@
 
 static const char *TAG_WIFI = "Wifi_Handler";
 
-#define SSID "Nhan Tai"
+#define SSID "S20 FE"
 #define PASS "25102004"
 
 #define WIFI_CONNECTED_BIT BIT0
