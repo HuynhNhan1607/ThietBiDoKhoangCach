@@ -642,6 +642,13 @@ D:/Project/ThieBiDoKhoangCach/build/esp-idf/espressif__esp_websocket_client/CMak
 D:/Project/ThieBiDoKhoangCach/build/esp-idf/espressif__esp_websocket_client/CMakeFiles/install.dir
 D:/Project/ThieBiDoKhoangCach/build/esp-idf/espressif__esp_websocket_client/CMakeFiles/install/local.dir
 D:/Project/ThieBiDoKhoangCach/build/esp-idf/espressif__esp_websocket_client/CMakeFiles/install/strip.dir
+D:/Project/ThieBiDoKhoangCach/build/esp-idf/espressif__mdns/CMakeFiles/__idf_espressif__mdns.dir
+D:/Project/ThieBiDoKhoangCach/build/esp-idf/espressif__mdns/CMakeFiles/edit_cache.dir
+D:/Project/ThieBiDoKhoangCach/build/esp-idf/espressif__mdns/CMakeFiles/rebuild_cache.dir
+D:/Project/ThieBiDoKhoangCach/build/esp-idf/espressif__mdns/CMakeFiles/list_install_components.dir
+D:/Project/ThieBiDoKhoangCach/build/esp-idf/espressif__mdns/CMakeFiles/install.dir
+D:/Project/ThieBiDoKhoangCach/build/esp-idf/espressif__mdns/CMakeFiles/install/local.dir
+D:/Project/ThieBiDoKhoangCach/build/esp-idf/espressif__mdns/CMakeFiles/install/strip.dir
 D:/Project/ThieBiDoKhoangCach/build/esp-idf/main/CMakeFiles/__idf_main.dir
 D:/Project/ThieBiDoKhoangCach/build/esp-idf/main/CMakeFiles/edit_cache.dir
 D:/Project/ThieBiDoKhoangCach/build/esp-idf/main/CMakeFiles/rebuild_cache.dir

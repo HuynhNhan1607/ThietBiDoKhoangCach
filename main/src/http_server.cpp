@@ -7,10 +7,14 @@
 
 #include "esp_err.h"
 #include "esp_log.h"
-
+#include "cJSON.h"
+#include "mdns.h"
 #include "http_server.h"
-
 #include "vl53l0x_handler.h"
+extern "C"
+{
+#include "nvs_handle.h"
+}
 
 extern vl53l0x_t vl53l0x;
 
@@ -61,8 +65,8 @@ static esp_err_t http_server_script_js_handler(httpd_req_t *req)
 
 static esp_err_t http_receive_handle(httpd_req_t *req)
 {
-    char recv_buf[1024];              // Bộ đệm để lưu chuỗi nhận
-    int total_len = req->content_len; // Độ dài toàn bộ nội dung
+    char recv_buf[1024];              
+    int total_len = req->content_len; 
     int cur_len = 0;
     int received = 0;
     if (total_len >= 1024)
@@ -84,16 +88,59 @@ static esp_err_t http_receive_handle(httpd_req_t *req)
         cur_len += received;
     }
     recv_buf[cur_len] = '\0';
-    int number = atoi(recv_buf);
+    if (strcmp(recv_buf, "Clear") == 0)
+    {
+        clear_nvs();
+    }
+    else
+    {
+        // printf("Number is: %d\n", number);
+    // char resp_str[50];
+    
+    // snprintf(resp_str, sizeof(resp_str), "%d", data);
+    // httpd_resp_send(req, resp_str, strlen(resp_str));
 
-    // printf("Number is: %d\n", number);
-    char resp_str[50];
-    uint16_t data = median_filter(&vl53l0x, 64);
-    snprintf(resp_str, sizeof(resp_str), "%d", data);
-    httpd_resp_send(req, resp_str, strlen(resp_str));
+    int DataToSend[5];
+    if (strcmp(recv_buf, "Measuring") == 0)
+    {
+    uint16_t MeasuringData = median_filter(&vl53l0x, 16);
+    add_new_element((int32_t)MeasuringData);
+    }
+    load_array((int32_t*)DataToSend);
+    // Tạo dữ liệu JSON
+    cJSON *root = cJSON_CreateObject();
+    cJSON *array = cJSON_CreateIntArray(DataToSend, 5);
+    cJSON_AddItemToObject(root, "data", array);
+    char *json_response = cJSON_Print(root);
+
+    httpd_resp_set_type(req, "application/json");
+    httpd_resp_send(req, json_response, strlen(json_response));
+
+    // Giải phóng bộ nhớ
+    cJSON_Delete(root);
+    free(json_response);
+    }
 
     return ESP_OK;
 }
+
+void start_mdns_service()
+{
+    ESP_ERROR_CHECK(mdns_init());
+    ESP_ERROR_CHECK(mdns_hostname_set("distance-measurer"));
+    ESP_LOGI(TAG, "mDNS hostname set to: distance-measurer");
+
+    ESP_ERROR_CHECK(mdns_instance_name_set("Distance Measuring Device"));
+    ESP_ERROR_CHECK(mdns_service_add("Web Server", "_http", "_tcp", 80, NULL, 0));
+
+    mdns_txt_item_t serviceTxtData[] = {
+        {"board", "esp32"},
+        {"project", "Distance Measurement"},
+    };
+    ESP_ERROR_CHECK(mdns_service_txt_set("_http", "_tcp", serviceTxtData, 2));
+}
+
+
 
 esp_err_t http_server_configure(void)
 {
@@ -157,5 +204,6 @@ esp_err_t http_server_configure(void)
             .user_ctx = NULL};
         httpd_register_uri_handler(http_server_handle, &receive_uri);
     }
+    start_mdns_service();
     return ESP_OK;
 }

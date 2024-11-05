@@ -4,23 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Distance Measuring Device</title>
+    <link rel="stylesheet" href="style.css"> <!-- Kết nối tệp CSS -->
 </head>
 
 <body>
     <div class="container">
-        <h1>Button</h1>
-        <button id="pressButton">Press</button>
-        <p id="counter">Press Counter: 0</p>
-        <button id="resetButton">Delete</button>
+        <h1>Distance Measuring Device</h1>
+        <div class="measurement-container">
+            <div class="flex-container">
+                <div>
+                    <p class="label">DATE:</p>
+                    <p id="receivedValue">Đang tải...</p> <!-- Hiển thị ngày đo cuối cùng -->
+                </div>
+                <div>
+                    <p class="label">DISTANCE:</p>
+                    <p id="counter">Đang tải...</p> <!-- Hiển thị khoảng cách đo cuối cùng -->
+                </div>
+            </div>
+            <!-- Nút đo khoảng cách -->
+            <button id="measuringButton" class="button">Measuring</button>
+            <!-- Nút xem lịch sử đo -->
+            <button id="historyButton" class="button">History</button>
+            <!-- Nút xóa lịch sử -->
+            <button id="clearButton" class="button">Clear</button>
+        </div>
+        <!-- Box lịch sử ẩn đi mặc định -->
+        <div id="historyBox" class="history-box" style="display: none;">
+            <h2>History</h2>
+            <ul id="historyList"></ul> <!-- Danh sách lịch sử -->
+            <button id="closeHistoryButton" class="button">Close</button>
+        </div>
     </div>
-
-    <!-- Thêm khung hiển thị giá trị đo được -->
-    <div class="measurement-container">
-        <p>Giá trị đo được: <span id="receivedValue"></span></p>
-    </div>
-
     <script src="script.js"></script>
 </body>
 

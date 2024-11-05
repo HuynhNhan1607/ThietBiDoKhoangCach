@@ -25,6 +25,6 @@
         "cjson.h": "c"
     },
     "idf.flashType": "UART",
-    "idf.portWin": "COM4",
+    "idf.portWin": "COM17",
     "liveServer.settings.port": 5501
 }

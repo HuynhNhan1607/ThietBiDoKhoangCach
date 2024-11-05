@@ -18,8 +18,12 @@ void nvs_init()
     }
     ESP_ERROR_CHECK(err);
 }
-
-void store_array(int32_t array[ARRAY_SIZE])
+void clear_nvs()
+{
+    int32_t arr[5] = {0};
+    store_array(arr);
+}
+void store_array(int32_t *array)
 {
     nvs_handle_t my_handle;
     esp_err_t err = nvs_open("storage", NVS_READWRITE, &my_handle);
@@ -49,7 +53,7 @@ void store_array(int32_t array[ARRAY_SIZE])
     nvs_close(my_handle);
 }
 
-void load_array(int32_t array[ARRAY_SIZE])
+void load_array(int32_t *array)
 {
     nvs_handle_t my_handle;
     esp_err_t err = nvs_open("storage", NVS_READONLY, &my_handle);
@@ -82,5 +86,17 @@ void update_array_element(int index, int32_t value)
     int32_t array[ARRAY_SIZE];
     load_array(array);
     array[index] = value;
+    store_array(array);
+}
+
+void add_new_element(int32_t value)
+{
+    int32_t array[ARRAY_SIZE];
+    load_array(array);
+    for (int i = ARRAY_SIZE - 1; i > 0; i--)
+    {
+        array[i] = array[i - 1];
+    }
+    array[0] = value;
     store_array(array);
 }

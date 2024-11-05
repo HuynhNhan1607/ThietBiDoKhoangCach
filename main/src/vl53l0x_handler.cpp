@@ -50,14 +50,14 @@ void sensor_task(void *pvParameters)
 void sensor_start(vl53l0x_t *vl53l0x)
 {
     vl53l0x->i2c->init();
-    vl53l0x->sensor->setTimeout(500);
+    vl53l0x->sensor->setTimeout(1000);
     while (!vl53l0x->sensor->init())
     {
         ESP_LOGW(TAG, "Failed to detect and initialize sensor!\r\n");
         vTaskDelay(100 / portTICK_PERIOD_MS);
     }
-    vl53l0x->sensor->setMeasurementTimingBudget(35000);
-    vl53l0x->sensor->setSignalRateLimit(0.4);
+    vl53l0x->sensor->setMeasurementTimingBudget(50000);
+    vl53l0x->sensor->setSignalRateLimit(0.2);
 #if defined LONG_RANGE
     // lower the return signal rate limit (default is 0.25 MCPS)
     vl53l0x->sensor.setSignalRateLimit(0.1);
