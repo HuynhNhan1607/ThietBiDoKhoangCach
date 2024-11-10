@@ -22,7 +22,9 @@
         "esp_websocket_client.h": "c",
         "vl53l0x_handler.h": "c",
         "vl53l0x.h": "c",
-        "cjson.h": "c"
+        "cjson.h": "c",
+        "time.h": "c",
+        "time_handle.h": "c"
     },
     "idf.flashType": "UART",
     "idf.portWin": "COM17",

@@ -4,7 +4,7 @@ extern "C"
 {
 #include "nvs_handle.h"
 #include "wifi_handler.h"
-
+#include "time_handle.h"
 #include "gpio_handler.h"
 #include "WebSocket.h"
 }
@@ -33,7 +33,7 @@ void app_main(void)
     wifi_init_sta();
     sensor_start(&vl53l0x);
     vTaskDelay(2000 / portTICK_PERIOD_MS);
-
+    init_time_sync();
     http_server_configure();
     // xTaskCreate(&websocket_client_task, "websocket_client_task", 8192, NULL, 5, NULL);
 }

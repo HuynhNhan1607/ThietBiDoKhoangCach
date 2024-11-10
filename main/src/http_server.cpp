@@ -14,6 +14,7 @@
 extern "C"
 {
 #include "nvs_handle.h"
+#include "time_handle.h"
 }
 
 extern vl53l0x_t vl53l0x;
@@ -90,7 +91,7 @@ static esp_err_t http_receive_handle(httpd_req_t *req)
     recv_buf[cur_len] = '\0';
     if (strcmp(recv_buf, "Clear") == 0)
     {
-        clear_nvs();
+        clear_data();
     }
     else
     {
@@ -99,26 +100,30 @@ static esp_err_t http_receive_handle(httpd_req_t *req)
     
     // snprintf(resp_str, sizeof(resp_str), "%d", data);
     // httpd_resp_send(req, resp_str, strlen(resp_str));
-
-    int DataToSend[5];
     if (strcmp(recv_buf, "Measuring") == 0)
     {
     uint16_t MeasuringData = median_filter(&vl53l0x, 16);
-    add_new_element((int32_t)MeasuringData);
+        // if(MeasuringData < 251)
+        // {
+        //     MeasuringData = (uint16_t)(0.95 * MeasuringData + 1.31);
+        // }
+        // else
+        // {
+        //     MeasuringData = (uint16_t)(0.97 * MeasuringData - 16.28);
+        // }
+    save_new_data(MeasuringData);
     }
-    load_array((int32_t*)DataToSend);
+    else if(strcmp(recv_buf, "History") == 0)
+    {
+        uint16_t data_array[ARRAY_SIZE];
+        int64_t time_array[ARRAY_SIZE];
+        load_data(data_array, time_array); // Chỉ tải dữ liệu, không ghiS
+    }
     // Tạo dữ liệu JSON
-    cJSON *root = cJSON_CreateObject();
-    cJSON *array = cJSON_CreateIntArray(DataToSend, 5);
-    cJSON_AddItemToObject(root, "data", array);
-    char *json_response = cJSON_Print(root);
+    char *json_response = create_json_response();
 
     httpd_resp_set_type(req, "application/json");
     httpd_resp_send(req, json_response, strlen(json_response));
-
-    // Giải phóng bộ nhớ
-    cJSON_Delete(root);
-    free(json_response);
     }
 
     return ESP_OK;

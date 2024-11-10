@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "ThieBiDoKhoangCach",
-    "project_version":    "91e85f8-dirty",
+    "project_version":    "f0d6869-dirty",
     "project_path":       "D:/Project/ThieBiDoKhoangCach",
     "idf_path":           "D:/IDF/esp-idf/v5.2.2/esp-idf",
     "build_dir":          "D:/Project/ThieBiDoKhoangCach/build",
@@ -835,7 +835,7 @@
             "managed_reqs": [],
             "managed_priv_reqs": [ "espressif__esp_websocket_client", "espressif__mdns" ],
             "file": "D:/Project/ThieBiDoKhoangCach/build/esp-idf/main/libmain.a",
-            "sources": [ "D:/Project/ThieBiDoKhoangCach/main/main.cpp", "D:/Project/ThieBiDoKhoangCach/main/src/nvs_handle.c", "D:/Project/ThieBiDoKhoangCach/main/src/http_server.cpp", "D:/Project/ThieBiDoKhoangCach/main/src/wifi_handler.c", "D:/Project/ThieBiDoKhoangCach/main/src/gpio_handler.c", "D:/Project/ThieBiDoKhoangCach/main/src/WebSocket.c", "D:/Project/ThieBiDoKhoangCach/main/src/vl53l0x_handler.cpp", "D:/Project/ThieBiDoKhoangCach/main/pololu_vl53l0x/i2c.cpp", "D:/Project/ThieBiDoKhoangCach/main/pololu_vl53l0x/vl53l0x.cpp", "D:/Project/ThieBiDoKhoangCach/build/index.html.S", "D:/Project/ThieBiDoKhoangCach/build/style.css.S", "D:/Project/ThieBiDoKhoangCach/build/script.js.S" ],
+            "sources": [ "D:/Project/ThieBiDoKhoangCach/main/main.cpp", "D:/Project/ThieBiDoKhoangCach/main/src/nvs_handle.c", "D:/Project/ThieBiDoKhoangCach/main/src/http_server.cpp", "D:/Project/ThieBiDoKhoangCach/main/src/wifi_handler.c", "D:/Project/ThieBiDoKhoangCach/main/src/gpio_handler.c", "D:/Project/ThieBiDoKhoangCach/main/src/WebSocket.c", "D:/Project/ThieBiDoKhoangCach/main/src/time_handle.c", "D:/Project/ThieBiDoKhoangCach/main/src/vl53l0x_handler.cpp", "D:/Project/ThieBiDoKhoangCach/main/pololu_vl53l0x/i2c.cpp", "D:/Project/ThieBiDoKhoangCach/main/pololu_vl53l0x/vl53l0x.cpp", "D:/Project/ThieBiDoKhoangCach/build/index.html.S", "D:/Project/ThieBiDoKhoangCach/build/style.css.S", "D:/Project/ThieBiDoKhoangCach/build/script.js.S" ],
             "include_dirs": [ ".", "./lib", "./pololu_vl53l0x" ]
         },
         "mbedtls": {

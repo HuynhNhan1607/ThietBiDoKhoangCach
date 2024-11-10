@@ -30,6 +30,14 @@ uint16_t median_filter(vl53l0x_t *vl53l0x, int num_samples)
     for (int i = 0; i < num_samples; i++)
     {
         samples[i] = sensor_read(vl53l0x);
+        if(samples[i] < 251)
+        {
+            samples[i] = (uint16_t)(0.95 * samples[i] + 1.31);
+        }
+        else
+        {
+            samples[i] = (uint16_t)(0.97 * samples[i] - 16.28);
+        }
         // printf("%d\n", samples[i]);
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
