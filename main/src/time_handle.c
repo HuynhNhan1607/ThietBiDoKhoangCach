@@ -2,6 +2,7 @@
 #include <time.h>
 #include "esp_sntp.h"
 #include "time_handle.h"
+#include "gpio_handler.h"
 
 void time_sync_notification_cb(struct timeval *tv)
 {
@@ -42,6 +43,7 @@ void init_time_sync()
     }
     else
     {
+        led_on();
         printf("Time synchronized successfully\n");
     }
 }

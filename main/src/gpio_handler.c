@@ -9,7 +9,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-#define LED_BUILDING GPIO_NUM_2
+#define LED_BUILDING GPIO_NUM_27
 
 /**
  * Configure the ESP32 gpios (LED & button );
@@ -22,6 +22,7 @@ void led_off()
 {
     gpio_set_level(LED_BUILDING, 0);
 }
+
 void gpios_setup()
 {
     /**

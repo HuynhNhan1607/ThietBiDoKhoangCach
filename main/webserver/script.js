@@ -1,5 +1,6 @@
 let dataArray = []; // Biến lưu trữ dữ liệu nhận từ server
 let dateArray = []; // Biến lưu trữ thời gian nhận từ server
+let isInitialLoad = true; // Biến cờ để kiểm tra lần khởi tạo trang đầu tiên
 
 // Hàm gửi yêu cầu POST tới /receive để nhận mảng dữ liệu từ server
 function fetchDataFromServer(action) {
@@ -17,10 +18,13 @@ function fetchDataFromServer(action) {
             Array.isArray(data.date) && data.date.length >= 5) {
             dataArray = data.data; // Lưu dữ liệu đo đạc
             dateArray = data.date; // Lưu thời gian tương ứng
-            if (action === "Measuring") {
+
+            // Nếu lần đầu khởi tạo hoặc nhấn "History" sau khi khởi tạo, hiển thị đủ 5 phần tử
+            if (isInitialLoad || action === "History") {
+                displayHistoryElements(true); // Hiển thị tối đa 5 phần tử có giá trị hợp lệ
+                isInitialLoad = false; // Đặt lại cờ sau lần khởi tạo đầu tiên
+            } else if (action === "Measuring") {
                 displaySingleElement(0); // Chỉ hiển thị phần tử đầu tiên khi nhấn "Measuring"
-            } else if (action === "History") {
-                displayHistoryElements(); // Hiển thị box `History` khi nhấn "History"
             }
         } else {
             dataArray = []; // Đặt lại mảng rỗng nếu dữ liệu không đủ phần tử
@@ -41,30 +45,40 @@ function displaySingleElement(index) {
     const element = dataArray[index];
     const date = dateArray[index];
     if (element !== undefined && date !== undefined) {
-        document.getElementById('counter').innerText = `${element} mm`; // Thêm đơn vị "mm"
-        document.getElementById('receivedValue').innerText = date; // Hiển thị thời gian tương ứng
+        const distanceText = element > 2500 ? "Overflow" : `${element} mm`;
+        document.getElementById('counter').innerHTML = `<strong>${distanceText}</strong>`; // In đậm giá trị
+        document.getElementById('receivedValue').innerText = formatDate(date); // Hiển thị thời gian tương ứng với định dạng cải tiến
     }
 }
 
-// Hiển thị các phần tử còn lại trong `historyBox` khi nhấn "History", thêm đơn vị "mm" và thời gian
-function displayHistoryElements() {
+// Hàm định dạng thời gian theo ngày/tháng/năm
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB') + ', ' + date.toLocaleTimeString(); // Định dạng ngày/tháng/năm
+}
+
+// Hiển thị các phần tử trong `historyBox` khi nhấn "History", hiển thị tối đa 5 phần tử có giá trị hợp lệ
+function displayHistoryElements(showAll = false) {
     const historyBox = document.getElementById('historyBox');
     const historyList = document.getElementById('historyList');
     historyList.innerHTML = ""; // Xóa danh sách cũ
 
-    // Lọc và hiển thị các phần tử không phải là 0
-    const filteredData = dataArray.slice(1).filter((element, index) => element !== 0);
-    const filteredDates = dateArray.slice(1).filter((date, index) => dataArray[index + 1] !== 0);
+    // Lọc và lấy tối đa 5 phần tử có giá trị khác 0
+    const dataToDisplay = dataArray.slice(0, 5).filter((element) => element !== 0);
+    const datesToDisplay = dateArray.slice(0, 5).filter((_, index) => dataArray[index] !== 0);
 
-    if (filteredData.length > 0) {
+    if (dataToDisplay.length > 0) {
         // Thêm các phần tử vào danh sách với đơn vị "mm" và thời gian
-        filteredData.forEach((element, index) => {
+        dataToDisplay.forEach((element, index) => {
             const listItem = document.createElement('li');
-            listItem.textContent = `${element} mm - ${filteredDates[index]}`; // Thêm đơn vị "mm" và thời gian
+            listItem.className = 'history-item';
+
+            const distanceText = element > 2500 ? "Overflow" : `${element} mm`;
+            listItem.innerHTML = `<span class="distance">${distanceText}</span><span class="date">${formatDate(datesToDisplay[index])}</span>`;
             historyList.appendChild(listItem);
         });
     } else {
-        // Hiển thị thông báo nếu không có dữ liệu lịch sử
+        // Hiển thị thông báo nếu không có dữ liệu lịch sử hợp lệ
         const listItem = document.createElement('li');
         listItem.textContent = "Không có dữ liệu lịch sử";
         historyList.appendChild(listItem);
@@ -87,6 +101,7 @@ document.getElementById('clearButton').addEventListener('click', () => {
     document.getElementById('historyBox').style.display = 'none'; // Ẩn box `History`
     dataArray = []; // Đặt lại mảng dữ liệu
     dateArray = []; // Đặt lại mảng thời gian
+    isInitialLoad = true; // Đặt lại cờ khi nhấn "Clear"
 
     // Gửi yêu cầu xóa dữ liệu tới server
     fetch('/receive', {

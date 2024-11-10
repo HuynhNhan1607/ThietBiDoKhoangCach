@@ -86,14 +86,28 @@ h1 {
 }
 
 .history-box ul li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 8px;
     margin-bottom: 8px;
     background-color: #3a3a3a;
     border-radius: 4px;
-    text-align: center;
     font-size: 16px;
 }
 
+/* Styling for distance and date columns in history */
+.history-box ul li .distance {
+    font-weight: bold;
+    color: #e0e0e0;
+    margin-right: 20px; /* khoảng cách giữa khoảng cách và ngày giờ */
+}
+
+.history-box ul li .date {
+    color: #aaa;
+}
+
+/* Close button styling in history box */
 .history-box .button {
     background-color: #e74c3c;
     width: 100%;
